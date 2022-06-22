@@ -96,6 +96,7 @@ async function setActivity() {
 
 rpc.on('ready', () => {
     console.log('rpc online, and ready to show vrchat updates.')
+     console.warn('Make sure VRChat is running before usage.')
     setInterval(() => {
         setActivity();
     }, 5000); // every 5 seconds update the rpc status});
