@@ -1,7 +1,7 @@
 let RPC = require('discord-rpc');
 const clientId = '988957464395382804';
 let startTimestamp = new Date();
-let core = {}
+let quest = {}
 
 
 const vrchat = require("vrchat");
@@ -103,10 +103,10 @@ rpc.on('ready', () => {
 })
 
 
-core.rpcStart = function () {
+quest.rpcStart = function () {
     rpc.login({
         clientId
     })
 }
 
-core.rpcStart()
+quest.rpcStart()
