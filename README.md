@@ -1,3 +1,6 @@
+? This was made for people who don't have VRChat on PC
+
+
 `Make Sure you have  npm install discord-rpc, and vrchat, installed via npm.`
 
 `npm i discord-rpc`
