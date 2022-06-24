@@ -61,6 +61,24 @@ async function setActivity() {
             return count
            }
 
+           function updatelink(){
+            var link = `https://vrchat.com/home/launch?worldId=${world.data.id}&instanceId=${instance.data.name}~region(use)`
+            // if link invalid, return error
+            if(link.length < 1){
+                return 'Invalid Link'
+            }
+            return link
+           }
+
+           function updateprofile(){
+            var profile = `https://vrchat.com/home/profile/${user.data.id}`
+            // if link invalid, return error
+            if(profile.length < 1){
+                return 'Invalid Link'
+            }
+            return profile
+           }
+
            function makeid(){
  
             var text = "";
@@ -70,7 +88,7 @@ async function setActivity() {
             return text;
         }
        
-        var link = `https://vrchat.com/home/launch?worldId=${world.data.id}&instanceId=${instance.data.name}~region(use)`
+        
         
         rpc.setActivity({
             pid: process.pid,
@@ -82,7 +100,7 @@ async function setActivity() {
             largeImageText: 'Current Status: ' + user.data.status,
             smallImageKey: 'aryx',
             smallImageText: `Users In World: ${getplayers()}/${getservercount()} `,
-            buttons : [{label: "Join World 🌐" , url: `${link}`}, {label: "Profile 🎧" , url: `https://vrchat.com/home/user/${user.data.id}`}],
+            buttons : [{label: "Join World 🌐" , url: updatelink()}, {label: "Profile 🎧" , url:  updateprofile()}],
             instance: true
         })
 
