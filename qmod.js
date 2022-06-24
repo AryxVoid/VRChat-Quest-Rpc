@@ -38,6 +38,7 @@ async function setActivity() {
                 
 
 
+     
            function getworld(){
                 if(world.data.name.length < 0){
                     return 'Not In A World'
@@ -79,6 +80,21 @@ async function setActivity() {
             return profile
            }
 
+           function isInstancePrivate(){
+            if(instance.data.isPrivate){
+                return 'True'
+            }
+            return 'False'
+        }
+
+        
+        function isFull(){
+            if(instance.data.full){
+                return 'True'
+            }
+            return 'False'
+        }
+
            function makeid(){
  
             var text = "";
@@ -87,19 +103,55 @@ async function setActivity() {
                 text += possible.charAt(Math.floor(Math.random() * possible.length));
             return text;
         }
+
+        function getId(){
+            let id = user.data.id
+            if(id.length < 1){
+                return 'No ID'
+            }
+            return id
+        }
        
-        
+       
+       function getActiveFriendCount(){
+        let count = user.data.activeFriends?.toString().length
+        if(count.toString().length < 1){
+            return 'No Active Friends'
+        }
+        return count
+    }  
+
+
+    function getAllowAvatarCopying(){
+        if(user.data.allowAvatarCopying){
+            return 'Enabled'
+        }
+        return 'Disabled'
+    }
+
+    
+    function getStatus(){
+        return user.data.status 
+    }
+
+    function getName(){
+        if(user.data.displayName.length < 1){
+            return 'No Display Name' || user.data.username
+        }
+        return user.data.displayName
+    }
+
         
         rpc.setActivity({
             pid: process.pid,
-            details: `Current World: ` + getworld(),
-            state: `Current User:  ${user.data.displayName}`,
+            details: `Current World: ${getworld()}  | IsPrivate: ${isInstancePrivate()} | IsFull: ${isFull()}`,
+            state:  `Users In World: ${getplayers()} / ${getservercount()}`,
             startTimestamp,
             userTimer: true,
             largeImageKey: 'quest2',
-            largeImageText: 'Current Status: ' + user.data.status,
+            largeImageText: `Current User: ${getName()} | ID: ${getId()} | Active Friends: ${getActiveFriendCount()}`,
             smallImageKey: 'aryx',
-            smallImageText: `Users In World: ${getplayers()}/${getservercount()} `,
+            smallImageText: 'Current Status: ' + getStatus() + ' | Cloning: ' + getAllowAvatarCopying(),
             buttons : [{label: "Join World 🌐" , url: updatelink()}, {label: "Profile 🎧" , url:  updateprofile()}],
             instance: true
         })
