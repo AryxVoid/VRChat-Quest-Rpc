@@ -134,8 +134,8 @@ async function setActivity() {
         return user.data.status 
     }
 
-    function getName(){
-        if(user.data.displayName.length < 1){
+   function getName(){
+        if(user.data.displayName.length < 0){
             return 'No Display Name' || user.data.username
         }
         return user.data.displayName
