@@ -95,7 +95,6 @@ function getregion(){
 
            function updateprofile(){
             var profile = `https://vrchat.com/home/profile/${user.data.id}`
-            // if link invalid, return error
             if(profile.length < 1){
                 return 'Invalid Link'
             }
@@ -125,6 +124,17 @@ function getregion(){
                 text += possible.charAt(Math.floor(Math.random() * possible.length));
             return text;
         }
+
+        function makejoinid(){
+            let key = makeid()
+            // obfuscate the key
+            let obfuscated = key.split('').map(function(char) {
+                return char.charCodeAt(0).toString(16);
+            });
+            return obfuscated.join('-');
+        }
+
+        
 
         function getId(){
             let id = user.data.id
@@ -175,7 +185,7 @@ function getregion(){
             largeImageText: `Current User: ${getName()} | ID: ${getId()} | Active Friends: ${getActiveFriendCount()}`,
             smallImageKey: 'aryx',
             smallImageText: 'Current Status: ' + getStatus() + ' | Cloning: ' + getAllowAvatarCopying(),
-            buttons : [{label: "Profile 🎧" , url:  updateprofile()}],
+            buttons : [{label: "Profile 🎧" , url:  updateprofile()} , {label: "🔐 Key: " + makejoinid()}],
             instance: true
         })
 
@@ -196,7 +206,7 @@ rpc.on('ready', () => {
   
     setInterval(() => {
         setActivity();
-    }, 5000); // every 5 seconds update the rpc status});
+    }, 4000); // every 4 seconds update the rpc status});
 
 })
 
@@ -208,3 +218,4 @@ quest.rpcStart = function () {
 }
 
 quest.rpcStart()
+
