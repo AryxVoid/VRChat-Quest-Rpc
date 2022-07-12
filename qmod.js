@@ -37,14 +37,37 @@ async function setActivity() {
             WorldsApi.getWorldInstance(world.data.id, u1.data.instanceId).then(instance =>{
                 
 
-
-     
            function getworld(){
                 if(world.data.name.length < 0){
                     return 'Not In A World'
                 }
                 return world.data.name
            }
+
+           function getworldid()
+{
+        let id = world.data.id
+        if(id.length < 0 ){
+            return ' No World ID'
+        }
+        return world.data.id
+}
+
+function getinstancename(){
+    let name = instance.data.name
+    if(name.length < 0 ){
+        return 'none'
+    }
+    return instance.data.name
+}
+
+function getregion(){
+    let reg = instance.data.region
+    if(reg.length < 0){
+        return 'No Region'
+    }
+    return instance.data.region
+}
 
            function getservercount(){
             let count = world.data.capacity
@@ -62,12 +85,11 @@ async function setActivity() {
             return count
            }
 
-           function updatelink(){
-            var link = `https://vrchat.com/home/launch?worldId=${world.data.id}&instanceId=${instance.data.name}~region(use)`
-            // if link invalid, return error
-            if(link.length < 1){
-                return 'Invalid Link'
-            }
+        function updatelink(){
+            var link ; 
+            setTimeout(() => {
+                link = `https://vrchat.com/home/launch?worldId=${getworldid()}&instanceId=${getinstancename()}~region(use)`
+            }, 3000);
             return link
            }
 
@@ -80,7 +102,7 @@ async function setActivity() {
             return profile
            }
 
-           function isInstancePrivate(){
+        function isInstancePrivate(){
             if(instance.data.isPrivate){
                 return 'True'
             }
@@ -95,7 +117,7 @@ async function setActivity() {
             return 'False'
         }
 
-           function makeid(){
+        function makeid(){
  
             var text = "";
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -134,25 +156,26 @@ async function setActivity() {
         return user.data.status 
     }
 
-   function getName(){
+    function getName(){
         if(user.data.displayName.length < 0){
             return 'No Display Name' || user.data.username
         }
         return user.data.displayName
     }
 
+
         
         rpc.setActivity({
             pid: process.pid,
             details: `Current World: ${getworld()}  | IsPrivate: ${isInstancePrivate()} | IsFull: ${isFull()}`,
-            state:  `Users In World: ${getplayers()} / ${getservercount()}`,
+            state:  `Users In World: ${getplayers()} / ${getservercount()}  | Region: ${getregion()}`,
             startTimestamp,
             userTimer: true,
             largeImageKey: 'quest2',
             largeImageText: `Current User: ${getName()} | ID: ${getId()} | Active Friends: ${getActiveFriendCount()}`,
             smallImageKey: 'aryx',
             smallImageText: 'Current Status: ' + getStatus() + ' | Cloning: ' + getAllowAvatarCopying(),
-            buttons : [{label: "Join World 🌐" , url: updatelink()}, {label: "Profile 🎧" , url:  updateprofile()}],
+            buttons : [{label: "Profile 🎧" , url:  updateprofile()}],
             instance: true
         })
 
